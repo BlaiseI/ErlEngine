@@ -1,0 +1,17 @@
+CURDIR := $(shell pwd)
+BASEDIR := $(abspath $(CURDIR)/..)
+
+PROJECT ?= $(notdir $(BASEDIR))
+PROJECT := $(strip $(PROJECT))
+
+C_SRC_OUTPUT ?= $(CURDIR)/../priv/$(PROJECT).so
+
+SOURCES := $(shell find $(C_SRC_DIR) -type f \( -name "*.c" -o -name "*.C" -o -name "*.cc" -o -name "*.cpp" \))
+OBJECTS = $(addsuffix .o, $(basename $(SOURCES)))
+
+link_verbose_0 = @echo " LD    " $(@F);
+link_verbose = $(link_verbose_$(V))
+
+$(C_SRC_OUTPUT): $(OBJECTS)
+	@mkdir -p $(BASEDIR)/priv/
+	$(link_verbose) $(CC) $(OBJECTS) $(LDFLAGS) $(LDLIBS) `sdl2-config --cflags --libs` -o $(C_SRC_OUTPUT)
