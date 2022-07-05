@@ -1,9 +1,13 @@
 -module(erlEngine).
 -on_load(init/0).
--export([initiate/0]).
+-export([sdl_init/0]).
 
-initiate() ->
+test_fun() ->
     nif_not_loaded.
+
+sdl_init() ->
+    test_fun(),
+    ok.
 
 init() ->
     SoName = case code:priv_dir(erlEngine) of

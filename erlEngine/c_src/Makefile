@@ -32,11 +32,15 @@ else ifeq ($(UNAME_SYS), Linux)
 endif
 
 CFLAGS += -fPIC -I $(ERTS_INCLUDE_DIR) -I $(ERL_INTERFACE_INCLUDE_DIR)
-CFLAGS += -fPIC -I /usr/include
+CFLAGS += -fPIC -I /usr/include/SDL2
 CXXFLAGS += -fPIC -I $(ERTS_INCLUDE_DIR) -I $(ERL_INTERFACE_INCLUDE_DIR)
 
 LDLIBS += -L $(ERL_INTERFACE_LIB_DIR) -lei
-LDLIBS += -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -llibSDL2-2.0.so.0.18.2
+LDLIBS += -L/usr/lib/ -lSDL2 -lSDL2_image
+#LDLIBS += -L/usr/lib/ -llibSDL2.2.0.so
+#LDLIBS += -L/usr/lib/ -llibSDL2.2.0.so.0
+#LDLIBS += -L/usr/lib/ -llibSDL2.2.0.so.0.22.0
+#LDLIBS += -L/usr/lib/ -llibSDL2main.a
 #LDLIBS += -L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu -llibSDL2-2.0.so.0
 LDFLAGS += -shared
 

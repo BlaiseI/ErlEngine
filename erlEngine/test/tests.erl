@@ -2,5 +2,5 @@
 -include_lib("eunit/include/eunit.hrl").
 
 initiate_test() ->
-    erlEngine:initiate(),
+    erlEngine:sdl_init(),
     finished.
