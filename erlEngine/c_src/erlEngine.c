@@ -8,6 +8,7 @@
 #define WINDOWN_HEIGHT (540)
 
 #define SCROLL_SPEED (300)
+#define SPEED (300)
 
 ERL_NIF_TERM atom_nok;
 ERL_NIF_TERM atom_ok;
@@ -31,7 +32,7 @@ ERL_NIF_TERM test(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]){
     }
     printf("SDL initiated, no error\n");
 
-    SDL_Window *win = SDL_CreateWindow("Hello, world !", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 540,0);
+    SDL_Window *win = SDL_CreateWindow("Hello, world !", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOWN_HEIGHT,0);
     if(!win){
         printf("error : %s, quit sdl", SDL_GetError());
         SDL_Quit();
@@ -69,10 +70,16 @@ ERL_NIF_TERM test(ErlNifEnv *env, int argc, const ERL_NIF_TERM argv[]){
 
     SDL_Rect dest;
     SDL_QueryTexture(tex, NULL, NULL, &dest.w, &dest.h);
-    dest.x = (WINDOW_WIDTH - dest.w) /2;
+    
+    float x_pos = (WINDOW_WIDTH - dest.w) /2;
+    float x_pos = (WINDOW_HEIGHT- dest.h) /2;
+    float x_vel = SPEED;
+    float y_vel = SPEED;
 
     float y_pos = WINDOWN_HEIGHT;
-    while(dest.y >= -dest.h){
+
+    int close_requested = 0;
+    while(!close_requested){
         SDL_RenderClear(rend);
         dest.y = (int) y_pos;
         SDL_RenderCopy(rend, tex, NULL, &dest);
